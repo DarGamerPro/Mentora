@@ -24,11 +24,11 @@ I wanted it to:
 
 ## 3. Examples of my prompts
 
-The prompts are copied exactly as I typed them.
+I wrote my prompts quite informally, so these are cleaned up for spelling and wording. The meaning of each one is the same as what I asked.
 
 **Starting the project**
 
-> okay but wait now. i will need to create anothe repo and another project which is supposed to be vibecoded and another homework for the same teacher which will be in another repo and at the end i will send them both to her. I yet again got 10 topics for the project and i chose this one : AI Personal Learning Assistant. So you should make this make it the best possible but in another repo. Take as long as needed no rush.
+> Make an AI Personal Learning Assistant as my vibecoded project, in a new repository. Make it the best it can be, and take as long as you need.
 
 Before writing any code, Claude asked me three multiple-choice questions. My answers were:
 
@@ -42,25 +42,19 @@ Claude then built the whole app, tested it in Chrome and pushed it to a new priv
 
 **Testing**
 
-> okay before i send this to her i yet again will need to write an essay and i will tell you when i am finished with the essay but for now how do i test it?
+> Before I send the project to my teacher, how do I test the app?
 
 Claude replied with a checklist for testing every page, how to connect my own API key, and how to open the app the way my teacher will (by downloading the ZIP from GitHub).
 
-**The essay**
-
-> okay can you also help me write the essay on the topic AI in everyday life.
-
-Claude read my first essay (for my OmniCalc project) to match its length and style, then wrote *AI in Everyday Life*. After that I told Claude how the structure of the essay should look, and it rewrote the essay to follow my structure.
-
 **The new design and features**
 
-> Change up the design by making the primary colors white and glacier blue and patches of light green where the student should look, also make it more dopamine givving so the studend doesnt loose focus as easily (which js means make it more satisfying), make a section for maths for geometry where students can calculate stuff and it dircetly chanegs in the picture yk like.
+> Change up the design by making the primary colors white and glacier blue and patches of light green where the student should look, also make it more satisfying so students don't lose focus as easily, make a section for maths for geometry where students can calculate stuff and it directly changes in the picture.
 
 Claude recoloured the whole app, added XP, levels and celebrations, and built the Geometry page.
 
 **This report**
 
-> okay and also do these in this repo
+> Also cover these requirements in the repository.
 
 I attached a screenshot of the assignment's requirements. Claude wrote this report, took the screenshots below and added them to the repository.
 
