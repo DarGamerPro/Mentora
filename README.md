@@ -2,6 +2,10 @@
 
 Mentora is a personal study app that runs in the browser. It combines an AI tutor with the tools a student needs every day: notes, flashcards that use spaced repetition, quizzes, a study planner and a focus timer. The interface is available in **English** and **Macedonian**, with light and dark themes.
 
+![Mentora home page](docs/screenshots/home.png)
+
+Mentora is a school project made with AI tools (vibecoding). [REPORT.md](REPORT.md) explains the topic and purpose, the AI tools and prompts used, the results, my own contribution and a reflection on AI.
+
 ## How to run it
 
 1. Download or clone this repository.
@@ -68,6 +72,8 @@ js/ai.js              Claude integration (streaming chat and structured JSON out
 js/app.js             navigation, onboarding and theme
 js/views/*.js         one file per page
 vendor/               the official Anthropic SDK bundled for the browser
+docs/screenshots/     screenshots used in the README and the report
+REPORT.md             project report: AI tools, prompts, contribution, reflection
 ```
 
 The app is plain HTML, CSS and JavaScript with no build step and no server. All data stays in the browser's local storage. Use **Settings → Export backup** to move it to another computer.
