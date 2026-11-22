@@ -67,7 +67,7 @@
           <p class="eyebrow">${esc(fmtDate(t, { weekday: "long", day: "numeric", month: "long" }))}</p>
           <h1>${esc(greeting())}${name ? `, <span class="hl">${esc(name)}</span>` : ""}</h1>
         </div>
-        <a class="btn ghost" href="#/tutor">${icon("tutor", 17)}<span>${esc(M.t("home.askTutor"))}</span></a>
+        <div class="head-actions">${M.xp.chip()}<a class="btn ghost" href="#/tutor">${icon("tutor", 17)}<span>${esc(M.t("home.askTutor"))}</span></a></div>
       </header>
 
       <section class="grid home-grid">
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="rec-actions">
-            <a class="btn primary" href="${rec.href}" data-rec>${esc(rec.cta)} ${icon("arrow", 17)}</a>
+            <a class="btn go" href="${rec.href}" data-rec>${esc(rec.cta)} ${icon("arrow", 17)}</a>
             ${more.slice(0, 2).map((r) => `<a class="chip-link" href="${r.href}">${icon(r.icon, 15)}<span>${esc(r.title)}</span></a>`).join("")}
           </div>
         </article>
@@ -101,7 +101,7 @@
         <a class="card stat span-3 rise" style="--i:4" href="#/focus">
           <span class="stat-label">${icon("timer", 16)} ${esc(M.t("home.focusToday"))}</span>
           <span class="stat-num">${focusToday}<small>/${goal} ${esc(M.t("unit.min"))}</small></span>
-          <span class="meter"><span style="width:${Math.min(100, Math.round((focusToday / goal) * 100))}%"></span></span>
+          <span class="meter${focusToday >= goal ? " done" : ""}"><span style="width:${Math.min(100, Math.round((focusToday / goal) * 100))}%"></span></span>
         </a>
         <a class="card stat span-3 rise" style="--i:5" href="#/quiz">
           <span class="stat-label">${icon("quiz", 16)} ${esc(M.t("home.accuracy"))}</span>
@@ -156,7 +156,15 @@
         if (p.done) M.store.log("tasks", 1);
         M.store.save();
         cb.closest("li").classList.toggle("done", p.done);
-        if (p.done) M.ui.toast(M.t("home.taskDone"), "good");
+        if (p.done) {
+          M.ui.toast(M.t("home.taskDone"), "good");
+          M.fx.sound("pop");
+          if (!p.xp) {
+            p.xp = true;
+            M.fx.burstAt(cb, 22);
+            M.xp.award(10, cb);
+          }
+        }
       })
     );
   };

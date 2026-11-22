@@ -8,13 +8,14 @@
     ["notes", "notes"],
     ["cards", "cards"],
     ["quiz", "quiz"],
+    ["geometry", "shapes"],
     ["planner", "calendar"],
     ["focus", "timer"],
     ["settings", "settings"],
   ];
   const ALIAS = { review: "cards" };
 
-  const LOGO = `<svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="9" fill="var(--ink)"/><path d="M9.5 22.5V11l6.5 6.5 6.5-6.5v11.5" fill="none" stroke="var(--bg)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="7" r="4" fill="var(--hl)" stroke="var(--bg)" stroke-width="1.5"/></svg>`;
+  const LOGO = `<svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="9" fill="var(--accent)"/><path d="M9.5 22.5V11l6.5 6.5 6.5-6.5v11.5" fill="none" stroke="var(--on-accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="7" r="4" fill="var(--hl)" stroke="var(--surface)" stroke-width="1.5"/></svg>`;
 
   M.views = M.views || {};
   let cleanup = null;
@@ -47,6 +48,7 @@
           ${NAV.map(([id, ic]) => `<a href="#/${id}" data-nav="${id}">${icon(ic, 19)}<span>${esc(M.t(`nav.${id}`))}</span><em class="nav-badge" data-badge="${id}"></em></a>`).join("")}
         </nav>
         <div class="side-foot">
+          ${M.xp.widget()}
           <a class="focus-mini" href="#/focus" hidden>${icon("timer", 16)}<span></span></a>
           <div class="side-row">
             <div class="seg seg-sm" role="group" aria-label="${esc(M.t("settings.language"))}">
@@ -100,6 +102,9 @@
     const view = M.views[name] ? name : "home";
     const navId = ALIAS[view] || view;
     $$("[data-nav]").forEach((a) => a.classList.toggle("active", a.dataset.nav === navId));
+    const nav = $(".nav");
+    const act = $(".nav a.active");
+    if (nav && act && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = act.offsetLeft - (nav.clientWidth - act.offsetWidth) / 2;
     const root = $("#view");
     if (!root) return;
     root.className = `main view-${view}`;

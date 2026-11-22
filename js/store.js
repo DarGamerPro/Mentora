@@ -14,6 +14,7 @@
       focusMinutes: 25,
       breakMinutes: 5,
       dailyGoal: 45,
+      sounds: true,
       onboarded: false,
     },
     subjects: [],
@@ -24,6 +25,7 @@
     sessions: [],
     activity: {},
     chats: [],
+    xp: 0,
   });
 
   const merge = (base, raw) => {
@@ -34,6 +36,7 @@
       if (Array.isArray(raw[k])) out[k] = raw[k].filter((x) => x && typeof x === "object");
     }
     if (raw.activity && typeof raw.activity === "object" && !Array.isArray(raw.activity)) out.activity = raw.activity;
+    out.xp = Math.max(0, Math.floor(Number(raw.xp) || 0));
     return out;
   };
 
@@ -194,6 +197,7 @@
         this.state.quizzes.push({ id: uid(), subjectId: subj[q.s], date: addDays(t, q.offset), total: q.total, correct: q.correct, source: "cards" });
       }
       for (const exam of this.upcomingExams()) M.brain.autoPlan(exam);
+      this.state.xp = (this.state.xp || 0) + 640;
       this.saveNow();
     },
     daysUntil(day) {

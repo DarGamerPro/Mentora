@@ -48,6 +48,7 @@
             <div class="field"><span>${esc(M.t("settings.theme"))}</span><div class="seg" role="group">
               ${["system", "light", "dark"].map((th) => `<button data-settheme="${th}" class="${s.theme === th ? "on" : ""}">${icon(th === "system" ? "monitor" : th === "light" ? "sun" : "moon", 15)}<span>${esc(M.t(`theme.${th}.short`))}</span></button>`).join("")}
             </div></div>
+            <label class="toggle"><input type="checkbox" data-sounds ${s.sounds !== false ? "checked" : ""}><span class="tg"></span><span>${esc(M.t("settings.sounds"))}</span></label>
           </div>
         </section>
 
@@ -150,6 +151,11 @@
       M.ui.toast(M.t("common.saved"), "good");
     });
     $$("[data-setlang]", root).forEach((b) => b.addEventListener("click", () => M.app.setLang(b.dataset.setlang)));
+    $("[data-sounds]", root).addEventListener("change", (e) => {
+      s.sounds = e.target.checked;
+      M.store.save();
+      if (s.sounds) M.fx.sound("correct");
+    });
     $$("[data-settheme]", root).forEach((b) =>
       b.addEventListener("click", () => {
         s.theme = b.dataset.settheme;

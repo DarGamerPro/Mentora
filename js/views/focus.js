@@ -85,6 +85,8 @@
       const st = M.store.state;
       st.sessions.push({ id: uid(), date: today(), minutes, subjectId: this.subjectId || "" });
       M.store.log("minutes", minutes);
+      M.xp.award(minutes * 2, $(".dial"), { label: M.t("xp.focus") });
+      M.xp.goalCheck();
     },
     finishEarly() {
       if (this.mode !== "focus") return this.setMode("focus");
@@ -98,6 +100,7 @@
         const minutes = Math.round(this.total / 60000);
         this.logFocus(minutes);
         this.chime();
+        M.fx.confetti({ count: 130 });
         M.ui.toast(M.t("focus.doneFocus", { n: minutes }), "good", 6000);
         this.setMode("break");
       } else {
@@ -197,7 +200,7 @@
           </div>
           <div class="focus-controls">
             <button class="icon-btn lg" data-reset title="${esc(M.t("focus.reset"))}" aria-label="${esc(M.t("focus.reset"))}">${icon("reset", 20)}</button>
-            <button class="btn primary big play" data-toggle></button>
+            <button class="btn go big play" data-toggle></button>
             <button class="icon-btn lg" data-skip title="${esc(M.t("focus.finish"))}" aria-label="${esc(M.t("focus.finish"))}">${icon("skip", 20)}</button>
           </div>
           <label class="field inline center"><span>${esc(M.t("focus.on"))}</span>

@@ -1,6 +1,6 @@
 # Mentora: AI Personal Learning Assistant
 
-Mentora is a personal study app that runs in the browser. It combines an AI tutor with the tools a student needs every day: notes, flashcards that use spaced repetition, quizzes, a study planner and a focus timer. The interface is available in **English** and **Macedonian**, with light and dark themes.
+Mentora is a personal study app that runs in the browser. It combines an AI tutor with the tools a student needs every day: notes, flashcards that use spaced repetition, quizzes, a geometry calculator, a study planner and a focus timer. Every bit of studying earns XP, so it stays satisfying to come back to. The interface is available in **English** and **Macedonian**, with light and dark themes.
 
 ![Mentora home page](docs/screenshots/home.png)
 
@@ -35,9 +35,11 @@ Without a key the app still works: the tutor answers from your own notes and fla
 | **Notes** | Markdown notes per subject with autosave and preview. AI tools: summarize, make flashcards, quiz me. An offline tool turns lines like `term - definition` into flashcards. |
 | **Flashcards** | Spaced repetition with Again / Hard / Good / Easy ratings, a 3D flip card, deck statistics and keyboard control. |
 | **Quiz** | Multiple-choice quizzes from your flashcards (offline), from any topic, or from a note (AI). Explanations, a score ring, "retry the missed ones" and "save missed as flashcards". |
+| **Geometry** | 11 shapes: rectangle, right triangle, triangle from three sides, circle with a sector, isosceles trapezoid, parallelogram, regular polygon, cuboid, cylinder, cone and sphere. Change a measurement with a slider, a number or by dragging the green dots on the picture, and the drawing and every result update straight away. Each result shows its formula with your numbers, and pointing at a result lights up that part of the picture. |
+| **Rewards** | XP for reviewing cards, answering quiz questions, focus minutes, finished tasks and tutor questions. Levels and ranks, combo bonuses for right answers in a row, and confetti with a short sound when you finish a session, score high, reach your daily goal or level up. |
 | **Planner** | Exams and tasks. Adding an exam automatically plans review sessions before it, or Claude can build a custom plan from your notes. |
 | **Focus** | A focus/break timer that keeps running while you use other pages, logs minutes to your stats and plays a chime when a block ends. |
-| **Settings** | Language, theme, API key and model, focus lengths and daily goal, subjects and colours, backup export/import, sample data and reset. |
+| **Settings** | Language, theme, sound effects, API key and model, focus lengths and daily goal, subjects and colours, backup export/import, sample data and reset. |
 
 ## How the "smart" parts work
 
@@ -46,6 +48,8 @@ Without a key the app still works: the tutor answers from your own notes and fla
 - **Recommendations**: the home page ranks possible next steps, such as an exam in a few days with low mastery, cards that are due, notes without flashcards, no focus time today, or no recent quiz, and shows the most useful one.
 - **Automatic study plan**: review sessions are placed 16, 11, 7, 4, 2 and 1 day(s) before an exam (spaced practice), skipping days that have already passed, and the last session is a practice test.
 - **Mastery**: 70% comes from how far apart your flashcard reviews are spaced (21+ days counts as mastered) and 30% from your last five quiz scores in that subject.
+- **XP and levels**: a card review gives 5 XP, a right quiz answer 10 (15 from the third right answer in a row), a focus minute 2 and a finished task 10. Level 1 needs 100 XP, and each level after that needs 50 more than the one before.
+- **Geometry**: triangles from three sides use the law of cosines for the angles and Heron's formula for the area. The picture is redrawn on every change and only zooms when the shape would leave the frame or get too small, so you can see it grow and shrink. The grid shows the scale.
 - **Offline tutor**: your question is split into keywords, and sentences from your notes and flashcards are ranked by how many keywords they match. Word endings are ignored, so "chlorophyll" also matches "chlorophyll's" and Macedonian word forms.
 
 ## Keyboard shortcuts
@@ -64,11 +68,14 @@ index.html            app shell and script order
 css/app.css           all styles, light and dark theme
 js/core.js            helpers, icons, safe Markdown renderer, dialogs and toasts
 js/i18n.js            English and Macedonian text
-js/store.js           data model saved in localStorage, streaks, mastery, backup
+js/i18n-extra.js      English and Macedonian text for geometry and rewards
+js/store.js           data model saved in localStorage, streaks, mastery, XP, backup
 js/sample.js          sample data in both languages
 js/srs.js             spaced-repetition scheduling
 js/brain.js           offline intelligence: recommendations, search, card extraction, quizzes, plans
 js/ai.js              Claude integration (streaming chat and structured JSON output)
+js/fx.js              XP, levels, confetti and sound effects
+js/geo.js             geometry formulas and drawings for every shape
 js/app.js             navigation, onboarding and theme
 js/views/*.js         one file per page
 vendor/               the official Anthropic SDK bundled for the browser

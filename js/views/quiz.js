@@ -162,12 +162,13 @@
     const q = s.questions[s.index];
     const answered = s.answers[s.index];
     const score = s.answers.filter((a) => a && a.correct).length;
+    const streak = combo(s);
     root.innerHTML = `
       <div class="quiz-play rise">
         <div class="review-top">
           <button class="btn ghost sm" data-quit>${icon("x", 15)}<span>${esc(M.t("quiz.quit"))}</span></button>
           <span class="review-count">${esc(M.t("quiz.qOf", { i: s.index + 1, n: s.questions.length }))}</span>
-          <span class="score-pill">${icon("check", 14)} ${score}</span>
+          <span class="quiz-badges">${streak >= 2 ? `<span class="combo" title="${esc(M.t("xp.combo"))}">${icon("flame", 14)} ${streak}×</span>` : ""}<span class="score-pill">${icon("check", 14)} ${score}</span></span>
         </div>
         <div class="progress"><span style="width:${(s.index / s.questions.length) * 100}%"></span></div>
         <article class="card q-card">
@@ -216,6 +217,26 @@
     }
     M.store.log("quiz", 1);
     renderPlay(root);
+    if (correct) {
+      const el = $(".option.right", root);
+      if (el) el.classList.add("fresh");
+      const streak = combo(s);
+      M.fx.sound("correct");
+      if (streak >= 3) M.fx.burstAt(el, 28);
+      M.xp.award(streak >= 3 ? 15 : 10, el, streak >= 3 ? { label: `${streak}×` } : {});
+    } else {
+      M.fx.sound("wrong");
+      M.xp.award(2, $(".option.wrong", root));
+    }
+  };
+
+  const combo = (s) => {
+    let n = 0;
+    for (let i = s.answers.length - 1; i >= 0; i--) {
+      if (s.answers[i] && s.answers[i].correct) n++;
+      else break;
+    }
+    return n;
   };
 
   const advance = (root) => {
@@ -269,6 +290,11 @@
       session = null;
       M.app.rerender();
     });
+    if (!s.rewarded) {
+      s.rewarded = true;
+      if (pct >= 80) M.fx.celebrate({ count: pct === 100 ? 190 : 110 });
+      setTimeout(() => M.xp.award(pct === 100 ? 35 : 10, $(".ring", root), { label: M.t(pct === 100 ? "xp.perfect" : "xp.quizDone") }), 400);
+    }
     const retry = $("[data-retry]", root);
     if (retry)
       retry.addEventListener("click", () => {
@@ -276,7 +302,7 @@
           const opts = M.util.shuffle(q.options);
           return { ...q, options: opts, answer: opts.indexOf(q.options[q.answer]) };
         });
-        session = { ...s, id: uid(), questions: qs, index: 0, answers: [], done: false, title: `${s.title} · ${M.t("quiz.retryTag")}` };
+        session = { ...s, id: uid(), questions: qs, index: 0, answers: [], done: false, rewarded: false, title: `${s.title} · ${M.t("quiz.retryTag")}` };
         renderPlay(root);
       });
     const save = $("[data-save]", root);

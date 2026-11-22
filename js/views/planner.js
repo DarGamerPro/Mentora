@@ -111,6 +111,14 @@
         if (p.done) M.store.log("tasks", 1);
         M.store.save();
         cb.closest("li").classList.toggle("done", p.done);
+        if (p.done) {
+          M.fx.sound("pop");
+          if (!p.xp) {
+            p.xp = true;
+            M.fx.burstAt(cb, 22);
+            M.xp.award(10, cb);
+          }
+        }
       })
     );
     $$("[data-pdel]", root).forEach((b) =>

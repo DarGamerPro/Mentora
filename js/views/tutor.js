@@ -157,6 +157,7 @@
         current.messages.push({ role: "assistant", content: M.brain.offlineAnswer(last.content, current.subjectId), offline: true });
         persist(current);
         M.store.log("chats", 1);
+        M.xp.award(3);
         paint();
         return;
       }
@@ -198,6 +199,7 @@
         if (hasFallback) chat.textOnly = true;
         chat.messages.push({ role: "assistant", content: res.text || buf, blocks: chat.textOnly ? undefined : res.content });
         M.store.log("chats", 1);
+        M.xp.award(3);
       } catch (err) {
         if (err && err.code === "aborted") {
           chat.textOnly = true;

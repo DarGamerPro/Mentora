@@ -78,6 +78,9 @@ window.M = window.M || {};
     bolt: '<path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
     chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    shapes: '<path d="M8.5 3 14 12.5H3z"/><circle cx="17" cy="16.5" r="4.5"/><rect x="3" y="15" width="7" height="6" rx="1"/>',
+    star: '<path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/>',
+    ruler: '<path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/>',
     wand: '<path d="m4 20 11-11M14 6l1-3 1 3 3 1-3 1-1 3-1-3-3-1zM19 13l.5 1.5L21 15l-1.5.5L19 17l-.5-1.5L17 15l1.5-.5z"/>',
   };
   const icon = (name, size = 18) =>

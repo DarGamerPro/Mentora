@@ -216,7 +216,7 @@
       <div class="rate" data-rate hidden>
         ${[0, 1, 2, 3].map((r) => `<button class="rate-btn r${r}" data-r="${r}"><b>${esc(M.t(`review.r${r}`))}</b><small data-iv="${r}"></small><kbd>${r + 1}</kbd></button>`).join("")}
       </div>
-      <div class="rate-wait" data-wait><button class="btn primary big" data-show>${esc(M.t("review.show"))} <kbd>Space</kbd></button></div>
+      <div class="rate-wait" data-wait><button class="btn go big" data-show>${esc(M.t("review.show"))} <kbd>Space</kbd></button></div>
     </div>`;
 
     const card = $("[data-flip]", root);
@@ -256,6 +256,13 @@
       stats.reviewed++;
       if (r >= 2) stats.good++;
       M.store.log("cards", 1);
+      const btn = $(`[data-r="${r}"]`, root);
+      if (btn) {
+        btn.classList.add("hit");
+        setTimeout(() => btn.classList.remove("hit"), 200);
+      }
+      M.fx.sound(r === 0 ? "wrong" : "pop");
+      M.xp.award(r === 0 ? 2 : 5, btn);
       if (r === 0) {
         const n = again.get(current.id) || 0;
         if (n < 2) {
@@ -282,6 +289,10 @@
         <div class="row-gap center"><a class="btn ghost" href="#/cards">${icon("back", 16)}<span>${esc(M.t("review.back"))}</span></a><a class="btn primary" href="#/home">${icon("home", 16)}<span>${esc(M.t("nav.home"))}</span></a></div>
       </div>`;
       M.ui.toast(M.t("review.toast", { n: stats.reviewed }), "good");
+      if (stats.reviewed) {
+        M.fx.celebrate({ count: 140 });
+        setTimeout(() => M.xp.award(15, $(".done-badge", root), { label: M.t("xp.sessionBonus") }), 350);
+      }
     };
 
     card.addEventListener("click", () => (flipped ? null : show()));
